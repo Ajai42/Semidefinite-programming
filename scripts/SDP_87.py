@@ -14,7 +14,8 @@ N = 50
 
 
 # Load DataFrame
-df = pd.read_pickle("../data/Max_2_SAT_N_"+str(N)+"_λstd_0_T_1024.0_reps_50_with_solution.pkl")
+# df = pd.read_pickle("../data/Max_2_SAT_N_"+str(N)+"_λstd_0_T_1024.0_reps_50_with_solution.pkl")
+df = pd.read_pickle("../data/Max_2_SAT_N_"+str(N)+"_λstd_0_T_1024.0_reps_50_with_solution_merged.pkl")
 
 # using SDP on the instance
 
@@ -30,4 +31,4 @@ for idx in tqdm(range(len(df))):
     
 df["SDP_nvc"] = SDP_nvc
 
-df.to_pickle("../data/Max_2_SAT_N_"+str(N)+"_λstd_0_T_1024.0_reps_50_with_solution_and_SDP.pkl") 
+df.to_pickle("../data/Max_2_SAT_N_"+str(N)+"_λstd_0_T_1024.0_reps_50_with_solution_and_SDP_test.pkl") 
