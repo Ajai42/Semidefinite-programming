@@ -10,24 +10,36 @@ def merge_results(output_dir, df_pickle, output_file):
     results = []
 
     for file in output_files:
-        with open(file, 'rb') as f:
-            sol, sol_nvc = pickle.load(f)
-            idx = int(os.path.basename(file).split('_')[1].split('.')[0])  # Extract index from filename
-            results.append((idx, sol, sol_nvc))
+        try:
+            with open(file, 'rb') as f:
+                sol, sol_nvc = pickle.load(f)
+                idx = int(os.path.basename(file).split('_')[1].split('.')[0])  # Extract index from filename
+                results.append((idx, sol, sol_nvc))
+        except Exception as e:
+            print(f"Error loading {file}: {e}")
+            continue
 
     # Sort results by index
     results.sort(key=lambda x: x[0])
 
     # Separate SOL and SOL_NVC
     SOL = [sol for idx, sol, sol_nvc in results]
-    SOL_NVC = [sol_nvc for idx, sol, sol_nvc in results]
-
-    # Convert lists to numpy arrays
-    SOL = np.array(SOL)
-    SOL_NVC = np.array(SOL_NVC)
+    SOL_NVC = [sol_nvc if isinstance(sol_nvc, (int, float)) else sol_nvc[0] for idx, sol, sol_nvc in results]
 
     # Load the original DataFrame
     df = pd.read_pickle(df_pickle)
+
+    # Initialize columns with NaN
+    df["Solution"] = np.nan
+    df["Solution_nvc"] = np.nan
+
+    # Ensure the length of the results matches the DataFrame index
+    if len(SOL) < len(df):
+        SOL.extend([np.nan] * (len(df) - len(SOL)))
+        SOL_NVC.extend([np.nan] * (len(df) - len(SOL_NVC)))
+
+    # Convert lists to numpy arrays
+    SOL = np.array(SOL, dtype=object)
 
     # Add the results to the DataFrame
     df["Solution"] = list(SOL)

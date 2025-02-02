@@ -11,6 +11,13 @@ fi
 # N value
 N=$1
 
+# Check if the merge-only flag is provided
+if [ "$2" == "--merge-only" ]; then
+    OUTPUT_DIR="./results/N_$N"
+    python3 /home/ubuntu/Semidefinite-programming/scripts/merge_results.py --output_dir $OUTPUT_DIR --df_pickle "../data/Max_2_SAT_N_${N}_λstd_0_T_1024.0_reps_50.pkl" --output_file "../data/Max_2_SAT_N_${N}_λstd_0_T_1024.0_reps_50_with_solution_merged.pkl"
+    exit 0
+fi
+
 # Number of instances to run in parallel
 NUM_INSTANCES=125
 

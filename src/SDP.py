@@ -67,7 +67,7 @@ def SDP_max_sat(N, instance, solver="Default"):
     return Y.value
 
 
-def rounding_87(Y, N, instance, h_planes=10000):
+def rounding_87(Y, N, instance, h_planes=1000):
     """
     Generates random solutions to a Max-2-SAT problem using hyperplane rounding on the SDP solution.
 
