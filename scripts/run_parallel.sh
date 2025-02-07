@@ -55,7 +55,7 @@ python3 /home/ubuntu/Semidefinite-programming/scripts/merge_results.py --output_
 echo "Results merged into ../data/Max_2_SAT_N_${N}_λstd_0_T_1024.0_reps_50_with_solution_merged.pkl"
 
 # Record the end time of the script
-script_end_time=$(date +%s)
+script_end_time=$(date +%s) 
 script_elapsed_time=$((script_end_time - script_start_time))
 script_elapsed_time_str=$(date -u -d @${script_elapsed_time} +"%T")
 
